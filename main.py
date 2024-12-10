@@ -4,6 +4,8 @@ import random
 
 pygame.init()
 
+snake_head_img = pygame.image.load("snake_head.png")
+
 SW, SH = 800, 800
 
 BLOCK_SIZE = 50
@@ -12,12 +14,17 @@ FONT= pygame.font.Font("PixelifySans-Regular.ttf", BLOCK_SIZE*2)
 screen = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
-
+#checkboard grid
 def drawGrid():
-  for x in range(0, SW, BLOCK_SIZE):
-    for y in range(0, SH, BLOCK_SIZE):
-      rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
-      pygame.draw.rect(screen, "#3c3c3c", rect, 1)
+    for x in range(0, SW, BLOCK_SIZE):
+        for y in range(0, SH, BLOCK_SIZE):
+            if (x // BLOCK_SIZE + y // BLOCK_SIZE) % 2 == 0:
+                color = "#3aad2d"  
+            else:
+                color = "#286e20" 
+            rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
+            pygame.draw.rect(screen, color, rect)
+
 
 class Snake: 
   def __init__(self):
@@ -95,7 +102,16 @@ while True:
   apple.update()
   score = FONT.render(f"{len(snake.body)-1}", True, "white")
 
-  pygame.draw.rect(screen, "green", snake.head)
+  if snake.xdir == 1:  
+    rotated_image = pygame.transform.rotate(snake_head_img, 0)
+  elif snake.xdir == -1:  
+      rotated_image = pygame.transform.rotate(snake_head_img, 180)
+  elif snake.ydir == -1:  
+      rotated_image = pygame.transform.rotate(snake_head_img, 90)
+  elif snake.ydir == 1:
+      rotated_image = pygame.transform.rotate(snake_head_img, -90)
+
+  screen.blit(rotated_image, (snake.head.x, snake.head.y))
 
   for square in snake.body:
     pygame.draw.rect(screen, "green", square)
