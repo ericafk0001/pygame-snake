@@ -15,12 +15,14 @@ pygame.mixer.music.set_volume(0.1)
 eat_sound.set_volume(0.2)
 death_sound.set_volume(0.2)
 
-SW, SH = 800, 800
+DARK_GREEN = (19, 66, 13)
+GREEN = (0, 255, 0)
 
+SW, SH = 1000, 1000
 BLOCK_SIZE = 50
 FONT= pygame.font.Font("PixelifySans-Regular.ttf", BLOCK_SIZE*2)
 
-screen = pygame.display.set_mode((800, 800))
+screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
 #checkboard grid
@@ -28,9 +30,9 @@ def drawGrid():
     for x in range(0, SW, BLOCK_SIZE):
         for y in range(0, SH, BLOCK_SIZE):
             if (x // BLOCK_SIZE + y // BLOCK_SIZE) % 2 == 0:
-                color = "#3aad2d"  
+                color = "#53c449"  
             else:
-                color = "#286e20" 
+                color = "#308f25" 
             rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
             pygame.draw.rect(screen, color, rect)
 
@@ -72,12 +74,23 @@ class Snake:
 
 class Apple:
   def __init__(self):
+    self.images = [
+      pygame.image.load("8.png"),
+      pygame.image.load("17.png"),
+      pygame.image.load("24.png"),
+      pygame.image.load("65.png"),
+      pygame.image.load("85.png")
+    ]
+    self.image = random.choice(self.images)
+    self.image = pygame.transform.scale(self.image, (BLOCK_SIZE, BLOCK_SIZE))
+
+    #randomize food position
     self.x = int(random.randint(0, SW)/BLOCK_SIZE) * BLOCK_SIZE
     self.y = int(random.randint(0, SH)/BLOCK_SIZE) * BLOCK_SIZE
     self.rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
 
   def update(self):
-    pygame.draw.rect(screen, "red", self.rect)
+    screen.blit(self.image, (self.x, self.y))
 
 score = FONT.render("0", True, "white")
 score_rect = score.get_rect(center=(SW/2, SH/20))
@@ -123,8 +136,9 @@ while True:
 
   screen.blit(rotated_image, (snake.head.x, snake.head.y))
 
-  for square in snake.body:
-    pygame.draw.rect(screen, "green", square)
+  for index, square in enumerate(snake.body):
+     color = DARK_GREEN if index % 2 == 0 else GREEN
+     pygame.draw.rect(screen, color, square)
 
   screen.blit(score, score_rect)
 
