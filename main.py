@@ -3,8 +3,17 @@ import sys
 import random
 
 pygame.init()
+pygame.mixer.init()
 
 snake_head_img = pygame.image.load("snake_head.png")
+eat_sound = pygame.mixer.Sound("eat.wav")
+death_sound = pygame.mixer.Sound("death.mp3")
+pygame.mixer.music.load("monday.mp3")
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.1)
+
+eat_sound.set_volume(0.2)
+death_sound.set_volume(0.2)
 
 SW, SH = 800, 800
 
@@ -45,6 +54,7 @@ class Snake:
         self.dead = True
 
     if self.dead:
+      death_sound.play()
       self.x, self.y = BLOCK_SIZE, BLOCK_SIZE
       self.head = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
       self.body = [pygame.Rect(self.x-BLOCK_SIZE, self.y, BLOCK_SIZE, BLOCK_SIZE)]
@@ -119,6 +129,7 @@ while True:
   screen.blit(score, score_rect)
 
   if snake.head.x == apple.x and snake.head.y == apple.y:
+    eat_sound.play()
     snake.body.append(pygame.Rect(square.x, square.y, BLOCK_SIZE, BLOCK_SIZE))
     apple = Apple()
 
