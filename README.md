@@ -36,12 +36,12 @@ This project is a simple implementation of the classic Snake game built using Py
 
 ## :sparkles: Features
 
-:heavy_check_mark:Dynamic Snake Movement: The snake moves in response to keyboard inputs, and its body follows its head.
-:heavy_check_mark:Grid-based Environment: A checkerboard grid is drawn to help guide the player’s movement.
-:heavy_check_mark:Sound Effects: Background music and sound effects for eating food and dying.
-:heavy_check_mark:Randomized Food Textures
-:heavy_check_mark:Game Over Condition: The game ends when the snake collides with itself or the wall.
-:heavy_check_mark:Customizable: Easily tweakable game settings like screen size, block size, and colors.
+- :heavy_check_mark:Dynamic Snake Movement: The snake moves in response to keyboard inputs, and its body follows its head.
+- :heavy_check_mark:Grid-based Environment: A checkerboard grid is drawn to help guide the player’s movement.
+- :heavy_check_mark:Sound Effects: Background music and sound effects for eating food and dying.
+- :heavy_check_mark:Randomized Food Textures
+- :heavy_check_mark:Game Over Condition: The game ends when the snake collides with itself or the wall.
+- :heavy_check_mark:Customizable: Easily tweakable game settings like screen size, block size, and colors.
 
 ## :white_check_mark: Requirements
 
