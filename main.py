@@ -1,14 +1,22 @@
-import pygame
+import os
 import sys
+import pygame
 import random
 
 pygame.init()
 pygame.mixer.init()
 
-snake_head_img = pygame.image.load("assets/snake_head.png")
-eat_sound = pygame.mixer.Sound("assets/eat.wav")
-death_sound = pygame.mixer.Sound("assets/death.mp3")
-pygame.mixer.music.load("assets/monday.mp3")
+def resource_path(relative_path):
+    try:
+      base_path = sys._MEIPASS
+    except Exception:
+      base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+snake_head_img = pygame.image.load(resource_path("assets/snake_head.png"))
+eat_sound = pygame.mixer.Sound(resource_path("assets/eat.wav"))
+death_sound = pygame.mixer.Sound(resource_path("assets/death.mp3"))
+pygame.mixer.music.load(resource_path("assets/monday.mp3"))
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.1)
 
@@ -20,7 +28,7 @@ GREEN = (0, 255, 0)
 
 SW, SH = 1000, 1000
 BLOCK_SIZE = 50
-FONT= pygame.font.Font("assets/PixelifySans-Regular.ttf", BLOCK_SIZE*2)
+FONT= pygame.font.Font(resource_path("assets/PixelifySans-Regular.ttf"), BLOCK_SIZE*2)
 
 screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption("Snake")
@@ -75,11 +83,11 @@ class Snake:
 class Apple:
   def __init__(self):
     self.images = [
-      pygame.image.load("assets/8.png"),
-      pygame.image.load("assets/17.png"),
-      pygame.image.load("assets/24.png"),
-      pygame.image.load("assets/65.png"),
-      pygame.image.load("assets/85.png")
+      pygame.image.load(resource_path("assets/8.png")),
+      pygame.image.load(resource_path("assets/17.png")),
+      pygame.image.load(resource_path("assets/24.png")),
+      pygame.image.load(resource_path("assets/65.png")),
+      pygame.image.load(resource_path("assets/85.png"))
     ]
     self.image = random.choice(self.images)
     self.image = pygame.transform.scale(self.image, (BLOCK_SIZE, BLOCK_SIZE))
